@@ -1,0 +1,104 @@
+import random 
+class RPGgame:
+    def __init__(self, name, level, health, attack, defense):
+        self.name = name
+        self.level = level 
+        self.health = health 
+        self.attact = attack
+        self.defense = defense
+    # is_alive method : health status check if health is greter than 0: return bool value 
+    def is_alive(self):
+        return self.health > 0
+    # take_damage method: take damage from enemy attack-diminish health by enemy (damage - defense)
+    def take_damage(self, damage):
+        if self.is_alive():
+            damage_taken = max(0, damage - self.defense)
+            if damage_taken <= self.defense:
+                damage_taken = 0
+                print(f"{self.name}blocked the attack!")
+            else:
+                damage_taken = damage - self.defenses
+                self.health -= damage_taken
+                print(f"{self.name} took {damage_taken} damage. Remaining health: {self.health}")
+    # attack_target method: attack enemy and get enemy damage 
+    def attack(self, enemy):
+    # damage random amount from 1 to defense level 
+        damage = random.randint(1, self.attack)
+        print(f"{self.name} attacks {enemy.name} for {damage} damage.")
+        enemy.take_damage(damage)
+#parent class Character of player and enemy 
+class Character(RPGgame):
+    def __init__(self, name, level, health, attack, defense):
+        super().__init__(name, level, health, attack, defense)
+        self.level = level
+        self.health = health
+        self.attack = attack
+        self.defense = defense
+    
+class Player(Character):
+    def __init__(self, name, level, health, attack, defense):
+        super().__init__(name, level, health, attack, defense)
+        #reset level1, health100, attack 25, defense 5
+        self.level =1
+        self.health = 100
+        self.attack = 25
+        self.defense = 5
+        self.gain_experience = 0 # add a method to gain experience 
+    # gain_experience method: increase int value ==> 0
+    def gain_experience(self, amount):
+        self.gain_experience += amount
+        print(f"{self.name} gained {amount} experience points.")
+        # level_up method: increase level by 1 attack by 10, defense by 5, if gain_experience is equal and greater than 50.
+        def level_up(self):
+            if self.gain_experience >= 50:
+                self.level += 1
+                self.attack += 10
+                self.defense += 5
+
+    
+class Enemy(Character):
+    def __init__(self, name, level):
+        health = random.randint(10,30) * level
+        attack = random.randint(5, 15) * level 
+        defense = random.randint(1, 5) * level
+        super().__init__(name, level, health, attack, defense)
+
+# battle method: player and enemy attack each other until one of them health is 0 or less 
+
+def battle(player, monster):
+        print(f"A wild {monster.name} appears!")
+        while player.is_alive() and monster.is_alive():
+            player.attack_target(monster)
+            if not monster.is_alive():
+                print(f"{monster.name} has been defeated!")
+                player.gain_experience(20 * monster.level)
+                player.level_up()
+                break
+            monster.attack_target(player)
+            if not player.is_alive():
+                print(f"{player.name} has been defeated by {monster.name}!")
+                break
+
+# main() simple automatic attack game RPG
+def main():
+    # monster_dict ={'슬라임': 1, '고블린': 2, '오크': 3}
+    monster_dict = {'슬라임': 1, '고블린': 2, '오크': 3}
+    #player = input("Enger your character name: ")
+    player_name = input("Enter your character name: ")
+    monster_name = random.choice(list(monster_dict.keys()))
+    player = Player(player_name, 1, 100, 25, 5)
+    # battle() monster and player 
+    for monster_name, level in monster_dict.items():
+            monster = Enemy(monster_name, level)
+            battle(player, monster)
+            if not player.is_alive():
+                print(f"{player.name} is over, and the game is over.")
+                break
+    else:
+        print(f"{player.name} has defeated all monsters and won the game!")
+if __name__ == "__main__":
+    main()
+
+
+
+   

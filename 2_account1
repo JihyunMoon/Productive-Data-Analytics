@@ -1,0 +1,43 @@
+class Account:
+    def __init__(self, name, balance):
+        self.name = name
+        self.balance = balance
+        self.bank = "SC은행"
+        self.account_number = "123-45-678901"
+        self.deposit_count = 0
+        self.deposit_log = []
+        self.withdraw_log = []
+
+    def display_info(self):
+        print(f"Bank: {self.bank}, name: {self.name}, account num: {self.account_number}, Balance: {format(self.balance, ',')}KRW")
+
+    def deposit(self, amount):
+        if amount >= 1:
+            self.balance += amount
+            self.deposit_count += 1
+            self.deposit_log.append(amount)
+            print(f"{amount}KRW deposited. New balance: {self.balance} KRW")
+            if self.deposit_count % 5 == 0:
+                interest = int(self.balance * 0.01)
+                self.balance += interest
+                print(f"Interest of {interest} KRW added.")
+        else:
+            print("Deposit amount must be greater than or equal to 1 KRW")
+
+    def withdraw(self, amount):
+        min_balance = 10000
+        if self.balance - amount < min_balance:
+            print("Withdrawal would result in balance below minimum required balance of 10,000 KRW")
+            return
+        else:
+            self.balance -= amount
+
+# 테스트 코드 (클래스 밖)
+acc1 = Account("Jihyun", 1000000)
+acc2 = Account("Minji", 2000000)
+acc1.withdraw(2800000)
+acc1.withdraw(900000)
+account_list = [acc1, acc2]
+for acc in account_list:
+    if acc.balance >= 1000000:
+        acc.display_info()

@@ -1,0 +1,45 @@
+import random
+
+class Account:
+    account_count = 0
+
+    def __init__(self, name, balance):
+        self.name = name
+        self.balance = balance
+        self.bank = "SC은행"
+        self.account_number = self.generate_account_number()
+        Account.account_count += 1
+
+    def generate_account_number(self):
+        part1 = str(random.randint(100, 999))
+        part2 = str(random.randint(10, 99))
+        part3 = str(random.randint(100000, 999999))
+        return f"{part1}-{part2}-{part3}"
+
+    @classmethod
+    def get_account_num(cls):
+        print(f"Total accounts: {cls.account_count}")
+
+    def deposit(self, amount):
+        if amount > 1:
+            self.balance += amount
+            print(f"{amount} KRW deposited. New balance: {self.balance} KRW")
+        else:
+            print("Deposit amount must be greater than 1 KRW")
+
+    def withdraw(self, amount):
+        if amount <= 0:
+            raise ValueError("Withdrawal amount must be positive")
+        elif amount > self.balance:
+            raise ValueError("Insufficient funds for withdrawal")
+        else:
+            self.balance -= amount
+            print(f"{amount} KRW withdrawn. New balance: {self.balance} KRW")
+
+a1 = Account("Jihyun", 1000000)
+a2 = Account("Minji", 2000000)
+
+a1.deposit(45000)
+a2.withdraw(50000)
+Account.get_account_num()
+print(f"Account Number: {a1.account_number}, Balance: {a1.balance} KRW")
