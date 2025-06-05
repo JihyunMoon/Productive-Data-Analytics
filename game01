@@ -7,6 +7,7 @@ class Character:
         self.health = health
         self.attack = attack
         self.defense = defense
+        self.gain_experience = 0
 
     def is_alive(self):
         return self.health > 0
@@ -21,20 +22,16 @@ class Character:
             print(f"{self.name} attacks {target.name} for {damage_taken} damage! {target.name}'s health: {target.health}")
 
 class Player(Character):
-    def __init__(self, name, level, health, attack, defense):
-        super().__init__(name, level, health, attack, defense)
-        self.experience = 0
-
-    def gain_experience(self, amount):
-        self.experience += amount
+    def gain_experience_points(self, amount):
+        self.gain_experience += amount
         print(f"{self.name} gained {amount} experience points.")
 
     def level_up(self):
-        if self.experience >= 50:
+        if self.gain_experience >= 50:
             self.level += 1
             self.attack += 10
             self.defense += 5
-            self.experience -= 50
+            self.gain_experience -= 50
             print(f"{self.name} leveled up! Level: {self.level}, Attack: {self.attack}, Defense: {self.defense}")
 
 class Enemy(Character):
@@ -50,17 +47,20 @@ def battle(player, monster):
         player.attack_target(monster)
         if not monster.is_alive():
             print(f"{monster.name} has been defeated!")
-            player.gain_experience(20 * monster.level)
+            player.gain_experience_points(20 * monster.level)
             player.level_up()
             break
+
         monster.attack_target(player)
         if not player.is_alive():
-            print(f"{player.name} has been defeated by {monster.name}!")
+            print(f"{player.name} has been defeated by {monster.name}.")
+            break
 
 def main():
     monster_dict = {'슬라임': 1, '고블린': 2, '오크': 3}
     player_name = input("Enter your character name: ")
-    player = Player(player_name, 1, 100, 25, 5)
+    player = Player(player_name, 1, 100, 15, 5)
+
     for monster_name, level in monster_dict.items():
         monster = Enemy(monster_name, level)
         battle(player, monster)
@@ -68,7 +68,7 @@ def main():
             print(f"{player.name} is over, and the game is over.")
             break
     else:
-        print(f"{player.name} has defeated all monsters and won the game!")
+        print(f"{player.name} has defeated all monsters!")
 
 if __name__ == "__main__":
     main()
