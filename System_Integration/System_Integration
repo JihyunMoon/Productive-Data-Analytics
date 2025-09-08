@@ -1,0 +1,20 @@
+Practice and Analyze for productive data analytics 
+
+Systems-Integrated Analytics (SIA)
+
+Definition: Analytics built on a fully integrated* application/data environment so data, events, and business logic flow across systems—delivering consistent, real-time insights and closed-loop automation.
+
+Why it matters: Streamlines operations, removes redundancy, speeds decisions, and improves agility with a single source of truth.
+
+How it works:
+
+ Integration fabric (APIs/iPaaS, CDC/ELT, event bus) connects apps and data.
+ Semantic layer standardizes entities & metrics (e.g., CTR, CVR, CPA, CIP).
+ Guardrails (e.g., CPA thresholds, data freshness/quality) protect outcomes.
+ Insights trigger actions back into systems (e.g., MAB budget reallocation).
+
+What success looks like:
+
+Faster decision cycles, lower CPA at target volume, CIP-positive growth.
+99%+ freshness SLA, consistent KPIs across tools, more decisions automated.
+
